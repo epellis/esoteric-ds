@@ -1,23 +1,22 @@
 package list
 
 import (
-	"errors"
 	"fmt"
-	"testing"
+	"github.com/pkg/errors"
 )
 
 type listNode struct {
 	value int
-	next *listNode
+	next  *listNode
 }
 
 type LinkedList struct {
 	sentinel *listNode
-	tail *listNode
-	length uint
+	tail     *listNode
+	length   int
 }
 
-func NewLinkedList() LinkedList {
+func New() LinkedList {
 	sentinel := listNode{}
 	return LinkedList{&sentinel, &sentinel, 0}
 }
@@ -37,7 +36,22 @@ func (l *LinkedList) InsertFront(val int) {
 }
 
 func (l *LinkedList) PopFront() (int, error) {
-	return 0, errors.New("not implemented")
+	if l.length == 0 {
+		return 0, errors.New("empty list")
+	}
+	value := l.sentinel.next.value
+	l.sentinel.next = l.sentinel.next.next
+	return value, nil
+}
+
+func (l *LinkedList) ToSlice() []int {
+	var slice []int
+
+	for node := l.sentinel.next; node != nil; node = node.next {
+		slice = append(slice, node.value)
+	}
+
+	return slice
 }
 
 func (l *LinkedList) Println() {
@@ -48,14 +62,4 @@ func (l *LinkedList) Println() {
 		}
 	}
 	fmt.Println()
-}
-
-func TestEmptyList(t *testing.T) {
-	l := NewLinkedList()
-	if l.length != 0 {
-		t.Error("empty list is not 0 length")
-	}
-	if l.tail.next != nil {
-		t.Error("tail does not point to nil")
-	}
 }

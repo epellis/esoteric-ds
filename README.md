@@ -4,7 +4,7 @@ A Collection of Rarely and not so Rarely Used Data Structures
 # List of Data Structures
 
 ## Not so Esoteric
-- [ ] Linked List
+- [x] Linked List
 - [ ] Hash Table
 
 ## Somewhat Esoteric
@@ -13,6 +13,8 @@ A Collection of Rarely and not so Rarely Used Data Structures
 ## Quite Esoteric
 - [ ] ???
 
-# Installation
+# Testing
 
-_Coming Soon_
+```
+$ go test ./...
+```
