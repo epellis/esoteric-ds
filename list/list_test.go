@@ -5,23 +5,22 @@ import (
 	"testing"
 )
 
+func assertEqual(a, b interface{}, t *testing.T) {
+	if a != b {
+		t.Errorf("Got: %v Expected: %v", a, b)
+	}
+}
+
 func TestEmptyList(t *testing.T) {
 	l := New()
-	if l.length != 0 {
-		t.Errorf("Expected 0, got %v", l.length)
-	}
-	if l.tail.next != nil {
-		t.Errorf("Expected nil, got %v", l.tail.next)
-	}
+	assertEqual(l.length, 0, t)
 }
 
 func TestInsertFront(t *testing.T) {
 	var goldSlice = [...]int{0}
 	l := New()
 	l.InsertFront(0)
-	if l.length != len(goldSlice) {
-		t.Errorf("Expected %v, got %v", len(goldSlice), l.length)
-	}
+	assertEqual(l.length, len(goldSlice), t)
 	if !reflect.DeepEqual(l.ToSlice(), goldSlice[:]) {
 		t.Errorf("Expected %v, got %v", goldSlice, l.ToSlice())
 	}
@@ -32,9 +31,7 @@ func TestInsertFrontTwice(t *testing.T) {
 	l := New()
 	l.InsertFront(0)
 	l.InsertFront(1)
-	if l.length != len(goldSlice) {
-		t.Errorf("Expected %v, got %v", len(goldSlice), l.length)
-	}
+	assertEqual(l.length, len(goldSlice), t)
 	if !reflect.DeepEqual(l.ToSlice(), goldSlice[:]) {
 		t.Errorf("Expected %v, got %v", goldSlice, l.ToSlice())
 	}
@@ -44,9 +41,7 @@ func TestInsertBack(t *testing.T) {
 	var goldSlice = [...]int{0}
 	l := New()
 	l.InsertBack(0)
-	if l.length != len(goldSlice) {
-		t.Errorf("Expected %v, got %v", len(goldSlice), l.length)
-	}
+	assertEqual(l.length, len(goldSlice), t)
 	if !reflect.DeepEqual(l.ToSlice(), goldSlice[:]) {
 		t.Errorf("Expected %v, got %v", goldSlice, l.ToSlice())
 	}
@@ -57,9 +52,7 @@ func TestInsertBackTwice(t *testing.T) {
 	l := New()
 	l.InsertBack(0)
 	l.InsertBack(1)
-	if l.length != len(goldSlice) {
-		t.Errorf("Expected %v, got %v", len(goldSlice), l.length)
-	}
+	assertEqual(l.length, len(goldSlice), t)
 	if !reflect.DeepEqual(l.ToSlice(), goldSlice[:]) {
 		t.Errorf("Expected %v, got %v", goldSlice, l.ToSlice())
 	}
@@ -72,9 +65,7 @@ func TestPop(t *testing.T) {
 	if err != nil {
 		t.Errorf("List is empty but should not be")
 	}
-	if val != 0 {
-		t.Errorf("Expected %v, got %v", 0, val)
-	}
+	assertEqual(val, 0, t)
 }
 
 func TestFifo(t *testing.T) {
@@ -89,8 +80,6 @@ func TestFifo(t *testing.T) {
 		if err != nil {
 			t.Errorf("List is empty but should not be")
 		}
-		if next != num {
-			t.Errorf("Expected %v, got %v", num, next)
-		}
+		assertEqual(next, num, t)
 	}
 }

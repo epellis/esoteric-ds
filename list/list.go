@@ -6,7 +6,7 @@ import (
 )
 
 type listNode struct {
-	value int
+	value interface{}
 	next  *listNode
 }
 
@@ -21,21 +21,21 @@ func New() LinkedList {
 	return LinkedList{&sentinel, &sentinel, 0}
 }
 
-func (l *LinkedList) InsertBack(val int) {
+func (l *LinkedList) InsertBack(val interface{}) {
 	newNode := listNode{val, nil}
 	l.tail.next = &newNode
 	l.tail = &newNode
 	l.length++
 }
 
-func (l *LinkedList) InsertFront(val int) {
+func (l *LinkedList) InsertFront(val interface{}) {
 	newNode := listNode{val, nil}
 	newNode.next = l.sentinel.next
 	l.sentinel.next = &newNode
 	l.length++
 }
 
-func (l *LinkedList) PopFront() (int, error) {
+func (l *LinkedList) PopFront() (interface{}, error) {
 	if l.length == 0 {
 		return 0, errors.New("empty list")
 	}
@@ -48,7 +48,7 @@ func (l *LinkedList) ToSlice() []int {
 	var slice []int
 
 	for node := l.sentinel.next; node != nil; node = node.next {
-		slice = append(slice, node.value)
+		slice = append(slice, node.value.(int))
 	}
 
 	return slice
